@@ -63,17 +63,50 @@ var getLegislatorBox = function(resultsObj){
 	return stringHTML
 }
 
-var handleResponse = function(apiResponse) {
-	var legislatorHTMLString = ''
-	var legislatorNode = document.querySelector('#legislatorContainer')
-	for(var i = 0; i<apiResponse.results.length; i++){
-		legislatorHTMLString += getLegislatorBox(apiResponse.results[i])
-	}
-	legislatorNode.innerHTML = legislatorHTMLString
-	var promis2 = $.getJSON()
-
-
+function clearDivtag(node){
+	node.innerHTML = ''
 }
-var promise = $.getJSON('https://congress.api.sunlightfoundation.com/legislators')
 
-promise.then(handleResponse)
+
+function main(){
+	var legislatorHTMLString = '',
+		inputValue = '',
+		legislatorNode = document.querySelector('#legislatorContainer'),
+		buttonNode = document.querySelector('#showMore'),
+		inputNode = document.querySelector('#inputText'),
+		promise = $.getJSON('https://congress.api.sunlightfoundation.com/legislators'),
+		pageCycle = {clicked:1}
+
+	promise.then(setInnerHTML)
+
+	function setInnerHTML(apiResponse) {
+		for(var i = 0; i<apiResponse.results.length; i++){
+			legislatorHTMLString += getLegislatorBox(apiResponse.results[i])
+		}
+		legislatorNode.innerHTML = legislatorHTMLString
+	}
+
+	inputNode.addEventListener('keydown', function(e){
+		if(e.keyCode == 13){
+			var zipLink = "http://congress.api.sunlightfoundation.com/legislators/locate?zip="+inputNode.value+"&key=(lol)"
+			legislatorHTMLString = ''
+			pageCycle.clicked = 0
+			promise3 = $.getJSON(zipLink)
+			promise3.then(setInnerHTML)
+		}
+	})
+
+	buttonNode.addEventListener('click', function(){
+		if(!legislatorNode.innerHTML){
+			pageCycle.clicked = 1
+		}
+		else{
+			pageCycle.clicked += 1
+		}
+		var link = "https://congress.api.sunlightfoundation.com/legislators?page=" + pageCycle.clicked
+		promise2 = $.getJSON(link)
+		promise2.then(setInnerHTML)
+	})
+}
+
+main()
