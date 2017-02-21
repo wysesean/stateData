@@ -74,7 +74,7 @@ function main(){
 		legislatorNode = document.querySelector('#legislatorContainer'),
 		buttonNode = document.querySelector('#showMore'),
 		inputNode = document.querySelector('#inputText'),
-		promise = $.getJSON('https://congress.api.sunlightfoundation.com/legislators'),
+		promise = $.getJSON('https://congress.api.sunlightfoundation.com/legislators&key=(lol)'),
 		pageCycle = {clicked:1}
 
 	promise.then(setInnerHTML)
@@ -90,7 +90,7 @@ function main(){
 		if(e.keyCode == 13){
 			var zipLink = "http://congress.api.sunlightfoundation.com/legislators/locate?zip="+inputNode.value+"&key=(lol)"
 			legislatorHTMLString = ''
-			pageCycle.clicked = 0
+			pageCycle.clicked = 0	
 			promise3 = $.getJSON(zipLink)
 			promise3.then(setInnerHTML)
 		}
@@ -103,7 +103,7 @@ function main(){
 		else{
 			pageCycle.clicked += 1
 		}
-		var link = "https://congress.api.sunlightfoundation.com/legislators?page=" + pageCycle.clicked
+		var link = "https://congress.api.sunlightfoundation.com/legislators?page=" + pageCycle.clicked+"&key=(lol)"
 		promise2 = $.getJSON(link)
 		promise2.then(setInnerHTML)
 	})
