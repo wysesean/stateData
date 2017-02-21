@@ -1,0 +1,41 @@
+*{
+	box-sizing: border-box;
+}
+
+body{
+}
+
+#mainContainer{
+	margin: auto;
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+
+}
+
+#textInputContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	background-color: #9cbf97;
+	padding:  10px;
+	margin: 0px;
+	outline: 2px solid black;
+}
+
+#legislatorContainer{
+	display: flex;
+	width: 100%;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+
+#legislatorBox{
+	width: 33.33%;
+	padding: 10px;
+	margin: 0px;
+	border: 0px;
+	outline: 2px solid black;
+	background-color: #d5f2d0;
+}
